@@ -7,17 +7,32 @@ var cardValue = ["ace", "two", "three", "four", "five", "six", "seven", "eight",
 var computerHand = [];
 var userHand = [];
 
+var selectedCardsArray = [];
+
 var newCard;
 var randomIndex;
+
 
 var deal ="user";
 // var turn = "user";
 
-// add function to build deck automatically
+
+// BUILD DECK AUTOMATICALLY
 
 
+var cardNumber =["A","2","3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+var cardSuit = ["Spades", "Clubs", "Diamonds", "Hearts"];
+var cardStatus = [];
+var newDeck = [];
+
+for (j = 0; j < cardNumber.length; j++) {
+	for(var i = 0; i < cardSuit.length; i++)  {
+	    newDeck.push({"cardNumber": cardNumber[j], "suit": cardSuit[i], "cardStaus": 'none'});
+	}
+}
 
 
+// old deck
 
 var deck = [
 "aceSpades",
@@ -73,6 +88,12 @@ var deck = [
 "kingDiamonds",
 "kingHearts"
 ];
+
+
+function createDeck() {
+
+}
+
 
 
 
@@ -171,11 +192,47 @@ $(document).ready(function(){
 
 	// USER SELECTS CARD TO ASK
 
-		//$('div.card').click(function() {
+		// $(document).on('click', '.card', function (){
+		// 	console.log('clicked card');
+		// 	$(this).addClass('selectedCard');
+		// });
+		
+	// USER SELECTS CARD 
+
 		$(document).on('click', '.card', function (){
 			console.log('clicked card');
-			$(this).addClass('selectedCard');
+
+			// deselects card if same card is clicked
+
+			if ($(this).hasClass("selectedCard")) {
+				console.log('same card');
+				$(this).removeClass("selectedCard");
+				selectedCardsArray = [];
+			}
+
+			// ensures that only one card selected at a time (switches cards)
+
+			else if (selectedCardsArray.length > 0) {
+				$('.card').removeClass('selectedCard');
+				selectedCardsArray.splice(0,1); //TODO or just empty
+				console.log('length > 0 - cards in array: ' + selectedCardsArray);
+				$(this).addClass('selectedCard');
+				selectedCardsArray.push(this);		
+			}
+
+
+			else {
+				$(this).addClass('selectedCard');
+				selectedCardsArray.push(this);
+			}
+			
 		});
+
+	// USER ASKS FOR SELECTED CARD
+
+	$("#askButton").click(function() {
+		$('.selectedCard').removeClass('selectedCard').addClass('asking');
+	});
 		
 
 	// USER CLICKS 'GO FISH BUTTON'
@@ -218,13 +275,15 @@ $(document).ready(function(){
 
 // other deck card methods
 
-// deck2 = [
-// {"number": "A",
-// "suit": "spades"
-// },
-// {"number": "A",
-// "suit": "clubs"
-// }];
+// var cardNumber =["A","2","3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+// var cardSuit = ["Spades", "Clubs", "Diamonds", "Hearts"];
+// var cardStatus = [];
+// var newDeck = [];
 
-
+// for (j = 0; j < cardNumber.length; j++) {
+// 	for(var i = 0; i < cardSuit.length; i++)  {
+// 	    newerDeck.push({"cardNumber": cardNumber[j], "suit": cardSuit[i], "cardStaus": 'none'});
+// 	}
+// }
+	
 
