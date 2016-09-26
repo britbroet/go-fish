@@ -10,6 +10,7 @@ var userHand = [];
 var newCard;
 var randomIndex;
 
+var deal ="user";
 // var turn = "user";
 
 // add function to build deck automatically
@@ -75,12 +76,16 @@ var deck = [
 
 
 
+$(document).ready(function(){
+
+
 	// Randomly select card from deck
 
 	function randomCard() {
 		randomIndex = Math.floor((Math.random() * deck.length - 1) + 1);
 		newCard = deck[randomIndex];
 	}
+
 
 	// Update arrays - move drawn card from deck array to user/comp hand array
 
@@ -89,7 +94,36 @@ var deck = [
 		hand.push(newCard);
 	}
 
-	// Card drawn and moves to appropriate hand (combine to one function?)
+
+// DEAL
+
+	function dealUser() {
+		randomCard();
+		// $("#userDrawnCard").append('<div class="card faceUp">' + newCard + '</div>');
+		addCardToUserHand(newCard);
+		updateArrays(randomIndex, userHand, newCard);
+	}
+
+	function dealComp() {
+			randomCard();
+			addCardToComputerHand(newCard);
+ 			updateArrays(randomIndex, computerHand, newCard);
+	}
+
+
+	$("#dealButton").click(function() {
+		var i = 0;
+		while (i < 7) {
+			dealUser();
+			dealComp();
+			i++;
+		}
+	});
+
+		// TODO: create interval to simulate actual deal
+
+	
+	//  TODO: Card drawn and moves to appropriate hand (combine to one function)
 
 			// function drawCard(x) {
 			// 	if (turn == "user") {
@@ -135,6 +169,15 @@ var deck = [
 			}, 1000);
 		}
 
+	// USER SELECTS CARD TO ASK
+
+		//$('div.card').click(function() {
+		$(document).on('click', '.card', function (){
+			console.log('clicked card');
+			$(this).addClass('selectedCard');
+		});
+		
+
 	// USER CLICKS 'GO FISH BUTTON'
 		$("#goFishButton").click(function() {
 			console.log('clicked');
@@ -169,6 +212,8 @@ var deck = [
 	 	updateArrays(randomIndex, computerHand, newCard);
 	 }
 
+
+});
 
 
 // other deck card methods

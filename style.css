@@ -41,6 +41,11 @@
 	float: left;
 }
 
+.selectedCard {
+	margin-top: -70px;
+	border; 4px solid black;
+}
+
 .deck {
 	margin-right: 20px;
 }
