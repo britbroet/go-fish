@@ -13,6 +13,7 @@ var newCard;
 var randomIndex;
 
 
+
 var deal ="user";
 // var turn = "user";
 
@@ -21,13 +22,21 @@ var deal ="user";
 
 
 var cardNumber =["A","2","3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-var cardSuit = ["Spades", "Clubs", "Diamonds", "Hearts"];
+var cardSuit = ["spades", "clubs", "diamonds", "hearts"];
 var cardStatus = [];
+var cardRef = [];
 var newDeck = [];
+var askedCard; //this is the object in the user's hand array that represents their selected card
+var createRef;
+var matchingCard;
+var matchId;
+var userMatches = [];
+var computerMatches = [];
+
 
 for (j = 0; j < cardNumber.length; j++) {
 	for(var i = 0; i < cardSuit.length; i++)  {
-	    newDeck.push({"cardNumber": cardNumber[j], "suit": cardSuit[i], "cardStaus": 'none'});
+	    newDeck.push({"cardNumber": cardNumber[j], "suit": cardSuit[i], "cardRef": cardSuit[i] + cardNumber[j], "cardStaus": 'none'});
 	}
 }
 
@@ -89,38 +98,39 @@ var deck = [
 "kingHearts"
 ];
 
-
-function createDeck() {
-
-}
+//$(document).ready(function(){
 
 
 
 
-$(document).ready(function(){
+
+
 
 
 	// Randomly select card from deck
 
 	function randomCard() {
-		randomIndex = Math.floor((Math.random() * deck.length - 1) + 1);
-		newCard = deck[randomIndex];
+		randomIndex = Math.floor((Math.random() * newDeck.length - 1) + 1);
+		console.log('randomIndex: ' + randomIndex);
+		newCard = newDeck[randomIndex];
+		console.log(newCard);
 	}
 
 
-	// Update arrays - move drawn card from deck array to user/comp hand array
+	// Update arrays - 
 
-	function updateArrays(randomIndex, hand, newCard) {
-		deck.splice(randomIndex, 1);
-		hand.push(newCard);
-	}
+		//move drawn card from deck array to user/comp hand array
+
+		function updateArrays(randomIndex, hand, newCard) {
+			newDeck.splice(randomIndex, 1);
+			hand.push(newCard);
+		}
 
 
 // DEAL
 
 	function dealUser() {
 		randomCard();
-		// $("#userDrawnCard").append('<div class="card faceUp">' + newCard + '</div>');
 		addCardToUserHand(newCard);
 		updateArrays(randomIndex, userHand, newCard);
 	}
@@ -141,7 +151,7 @@ $(document).ready(function(){
 		}
 	});
 
-		// TODO: create interval to simulate actual deal
+		// TODO: create interval/timeout to simulate actual deal timing
 
 	
 	//  TODO: Card drawn and moves to appropriate hand (combine to one function)
@@ -177,25 +187,20 @@ $(document).ready(function(){
 		function userTurn() {
 			randomCard();
 			$("#userDrawnCard").append('<div class="card faceUp">' + newCard + '</div>');
-			console.log(deck[randomIndex]);
 			addCardToUserHand(newCard);
 			updateArrays(randomIndex, userHand, newCard);
 		}
 
 	// NEW CARD ADDED TO USER HAND
 		function addCardToUserHand(x) {
-			setTimeout(function() {
-				$("#userDrawnCard").empty();
-				$("#userHand").append('<div class="card faceUp cardInHand">' + x + '</div>');
-			}, 1000);
+			var thisSuit = x.suit;
+			var thisNum = x.cardNumber;
+			console.log(thisSuit);
+			$("#userDrawnCard").empty();
+			$("#userHand").append('<div class="card faceUp cardInHand ' + thisSuit + ' ' + thisNum + '"' + 'id="' + thisSuit + thisNum + '">' + x.cardNumber + ' of ' + x.suit + '</div>');
+			$("#checkUser").append(x.cardNumber + x.suit + '<br>');
 		}
 
-	// USER SELECTS CARD TO ASK
-
-		// $(document).on('click', '.card', function (){
-		// 	console.log('clicked card');
-		// 	$(this).addClass('selectedCard');
-		// });
 		
 	// USER SELECTS CARD 
 
@@ -230,8 +235,73 @@ $(document).ready(function(){
 
 	// USER ASKS FOR SELECTED CARD
 
+		// function lookForCompMatch(obj) {
+		// 	for (j = 0; j < computerHand.length; j++) {
+		// 		if (obj.cardNumber == computerHand[j].cardNumber) {
+		// 		matchingCard = computerHand[j];	
+		// 			console.log('match!!!' + "comp card: " + computerHand[j]);
+		// 			updateUserMatches(createRef, askedCard, j, matchingCard);
+		// 		}
+		// 		else {
+		// 			console.log('not a match');
+		// 		}
+		// 	}
+		// }
+
+
+		// move matches to match array 246
+
+		// function updateUserMatches(userMatchIndex, askedCard, compMatchIndex, compCard) {
+		// 	userHand.splice(userMatchIndex, 1);
+		// 	userMatches.push(askedCard);
+		// 	//computer match
+		// 	computerMatches.splice(compMatchIndex, 1);
+		// 	userMatches.push(compCard);
+		// }
+
+
+	// CLICK ASK BUTTON
+
 	$("#askButton").click(function() {
 		$('.selectedCard').removeClass('selectedCard').addClass('asking');
+		createRef = $('.asking').attr('id');
+		console.log(createRef);
+
+		// find card in user hand array that corresponds with card selected 
+		for (i = 0; i < userHand.length; i++) {
+			if (createRef == userHand[i].cardRef) {
+				
+				// variable askedCard is the array object for the selected card
+				var askedCard = userHand[i];
+				
+				// function to see if anything in comp hand has same number value
+				
+				for (j = 0; j < computerHand.length; j++) {
+					if (askedCard.cardNumber == computerHand[j].cardNumber) {
+						matchingCard = computerHand[j];	
+						console.log('match!!!' + "comp card: " + computerHand[j].cardRef);
+						matchId = matchingCard.cardRef;
+						document.getElementById(matchingCard.cardRef).remove();
+
+						//UPDATE USER MATCHES & HAND ARRAYS
+						userHand.splice(i, 1);
+						userMatches.push(askedCard);
+						computerHand.splice(j, 1);
+						userMatches.push(matchingCard);
+						$("#userScore").append('Your Total Matches: ' + userMatches.length/2);
+						$(".asking").remove();
+					}
+
+					else {
+						//$("#messageBox").text('not a match'); //TODO add message area (no matches)
+					}
+
+				}
+			}
+		}
+
+		$(".asking").removeClass('asking');
+
 	});
 		
 
@@ -254,10 +324,11 @@ $(document).ready(function(){
 
 	// NEW CARD ADDED TO COMPUTER HAND
 	function addCardToComputerHand(x) {
-		setTimeout(function() {
+
 			$("#computerDrawnCard").empty();
-			$("#computerHand").append('<div class="card faceDown cardInHand"><p class="tempCompCardStyle">' + x + '</p></div>');
-		}, 1000);
+			$("#compHand").append('<div class="card faceDown cardInHand" id="' + x.suit + x.cardNumber + '"><p class="tempCompCardStyle">'  + x.cardNumber + ' of ' + x.suit +  '</p></div>');
+			$("#checkComp").append(x.cardNumber + x.suit + '<br>');
+
 	}
 
 
@@ -270,7 +341,7 @@ $(document).ready(function(){
 	 }
 
 
-});
+//});
 
 
 // other deck card methods

@@ -4,6 +4,29 @@
 	margin: 0 auto;
 }
 
+#userScore {
+	width: 49%;
+	min-height: 30px;
+	font-size: 24px;
+	font-weight: bold;
+	display:inline-block;
+}
+
+#computerScore {
+	width: 49%;
+	min-height: 30px;
+	font-size: 24px;
+	font-weight: bold;
+	display:inline-block;
+}
+
+#messageBox {
+	width: 100%;
+	min-height: 30px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
 .cardContainer {
 	height: 200px;
 	background-color: gray;	
@@ -91,3 +114,21 @@
 	background-color: red;
 }
 
+
+.checkContainer {
+	width: 900px;
+	min-height: 200px;
+	background-color: teal;
+}
+
+.checkDiv {
+	width: 200px;
+	padding: 10px;
+	min-height: 200px;
+	display: inline-block;
+}
+
+.asking {
+	border: 2px solid red;
+	margin-top: -100px;
+}
