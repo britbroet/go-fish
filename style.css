@@ -1,0 +1,88 @@
+
+.gameContainer {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.cardContainer {
+	height: 200px;
+	background-color: gray;	
+	margin-bottom: 20px;
+	padding-left: 60px;
+}
+
+.deckContainer {
+	background-color: green;	
+}
+
+.compCardContainer {
+	background-color: gray;
+    display: flex;
+    justify-content: center;
+}
+
+.userCardContainer {
+	background-color: yellow;
+	display: flex;
+    justify-content: center;
+}
+
+.card {
+	width: 100px;
+	height: 140px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: inline-block;
+	float:left;
+}
+
+.cardInHand {	
+	margin-left: -50px;
+	float: left;
+}
+
+.deck {
+	margin-right: 20px;
+}
+
+.testDiv {
+	display: flex;
+	height: 140px;
+	width: 100px;
+	justify-content: space-around;
+	background-color: orange;
+}
+
+.container {
+	width: 90%;
+	margin: 0 auto;
+	height: 200px;
+	background-color: teal;
+	display: flex;
+}
+
+
+.faceDown {
+    background-image: url(img/playing-card-back.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: purple;
+}
+
+.tempCompCardStyle {
+	background-color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.faceUp {
+	/*background-image: url('img/aceSpades.png');*/
+	background-color: white;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+.userDrawnCard {
+	background-color: red;
+}
+
