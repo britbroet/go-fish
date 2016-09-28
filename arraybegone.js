@@ -31,6 +31,13 @@ var currentCardNum;
 var compareCard;
 var compareCardId; 
 var compareCardNum;
+
+var yourMatchIndex;
+
+var compCardsInHand;
+var compCardIndex;
+var compCardId;
+
 //var matchesInHand;
 
 
@@ -102,23 +109,25 @@ for (j = 0; j < numberOption.length; j++) {
 
 
 function checkForMatch(hand) {
+	console.log('checkForMatch for ' + hand + ' firing');
 	clearTimeout(userStartWait);
 	clearTimeout(compStartWait);
 	var checkHandDiv = "#" + hand + " div";
 	var checkHand = '#' + hand;
 	var checkHandVar = hand;
 	console.log('checkHandDiv, var made in checkForMatch: ' + checkHandDiv);
+	
 	for (i = 1; i < $(checkHandDiv).length + 1; i++) {
 		currentCard = $('#' + checkHandVar + ' :nth-child(' + i + ')'); 
 		currentCardId = currentCard.attr('id');
 		currentCardNum = currentCard.attr('data-number');
+		
 		console.log('data num: ' + currentCard.attr('data-number'));
 		console.log('this is the current card: ' + currentCard);
 
 		for (j = 1; j < $('#' + checkHandVar + ' div').length + 1; j++) {
 			if (j == i) {
 				console.log('hit current card in check loop <br> i=' + i + ' j=' + j);
-				//break; thought might avoid inital 3-match (9/28 - noon)
 			}
 			else {
 				console.log('hit different card in check loop <br> i=' + i + ' j=' + j);
@@ -136,7 +145,8 @@ function checkForMatch(hand) {
 		}
 	}
 
-	// CHECKS TO SEE IF MATCHES EXIST, THEN FILES MATCHES IF COMP, OR SHOWS FILE BUTTON IF USER
+
+	// PREGAME ONLY: CHECKS TO SEE IF MATCHES EXIST, THEN FILES MATCHES IF COMP, OR SHOWS FILE BUTTON IF USER
 	var matchesInHand = $('#' + checkHandVar + ' .preMatch').index();
 		console.log('matches in hand: ' + matchesInHand);
 
@@ -176,61 +186,54 @@ function checkForMatch(hand) {
 	}
 }
 
-$('#fileMatchesButton').click(function() {
-	$('#fileMatchesButton').hide();
-	clearTimeout(userStartWait);
-	$('#messageBox').empty();
-	$('#stuff').append($('#userHandUI .preMatch'));
-	$('#stuff .preMatch').removeClass('preMatch');
-	stuffDivLength = $('#stuff div').length;
-	console.log(stuffDivLength);
-	$('#userScore').text(stuffDivLength/2);
+	// FILE MATCHES BUTTON CLICKED AT START
 
-	compStartWait = setTimeout(function() {
-		checkForMatch('compHandUI');
-	}, 1000);
-});
+	$('#fileMatchesButton').click(function() {
+		$('#fileMatchesButton').hide();
+		clearTimeout(userStartWait);
+		$('#messageBox').empty();
+		$('#stuff').append($('#userHandUI .preMatch'));
+		$('#stuff .preMatch').removeClass('preMatch');
+		stuffDivLength = $('#stuff div').length;
+		console.log(stuffDivLength);
+		$('#userScore').text(stuffDivLength/2);
+
+		compStartWait = setTimeout(function() {
+			checkForMatch('compHandUI');
+		}, 1000);
+	});
 
 
 
 
-	// NEW CARD ADDED TO USER HAND
+	// ADD NEW CARD FROM DECK TO USER HAND
 
 	function addCardToUserHandUI(card) {
 		console.log('addCardToUserHandUI firing');
-		newCardID = card.cardSuit + card.cardNumber;
-		//$("#drawnCardUI").empty();	
+		newCardID = card.cardSuit + card.cardNumber;	
 		$("#userHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '">' + card.cardNumber + '<br>' + card.cardSuit + '</div>');
 		$('#' + newCardID).addClass('card faceUp cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
 		console.log(randomCard.cardId);
-		// tried adding on click function here but not working
 	}
 
 
-	// NEW CARD ADDED TO COMPUTER HAND
+	// ADD NEW CARD FROM DECK TO COMPUTER HAND
 	
 	function addCardToCompHandUI(card) {
 		console.log('addCardToCompHandUI firing');
 		newCardID = card.cardSuit + card.cardNumber;
-		//$("#drawnCardUI").empty();
 		$("#compHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"><p class="tempCompCardStyle">'  + card.cardNumber + '<br>' + card.cardSuit +  '</p></div>');
 		$('#' + newCardID).addClass('card faceDown cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
 	}
 
-// TODO: add pause when card drawn
 
-
-
-
-
-	
 
 // USER TURN
 
 	// USER SELECTS CARD FROM THEIR HAND TO ASK ABOUT
 
 		$(document).on('click', '.faceUp', function (){
-			console.log('clicked card');
+			console.log('clicked card firing');
 			$('#askButton').show();
 
 			cardRefUI = $(this).attr('id');
@@ -242,6 +245,7 @@ $('#fileMatchesButton').click(function() {
 			if ($(this).hasClass("selectedCard")) {
 				console.log('same card');
 				$(this).removeClass("selectedCard");
+				$('#askButton').hide();
 			}
 
 			// ensures that only one card selected at a time (switches cards)
@@ -258,14 +262,14 @@ $('#fileMatchesButton').click(function() {
 		});
 
 	
-	// USER DRAWS FROM DECK (GO FISH)
+	// // USER DRAWS FROM DECK (GO FISH)
 
-	function userTurn() {
-		console.log('userTurn firing');
-		selectRandomCard();
-		//$("#drawnCard").append('<div class="card faceUp">' + randomCard + '</div>'); //draw stage TODO
-		addCardToUserHandUI(randomCard);
-	}
+	// function userTurn() {
+	// 	console.log('userTurn firing');
+	// 	selectRandomCard();
+	// 	//$("#drawnCard").append('<div class="card faceUp">' + randomCard + '</div>'); //draw stage TODO
+	// 	addCardToUserHandUI(randomCard);
+	// }
 
 
 	//CLICK ASK BUTTON
@@ -275,19 +279,19 @@ $('#fileMatchesButton').click(function() {
 		$('.selectedCard').removeClass('selectedCard').addClass('asking');
 		cardRefUI = $('.asking').attr('id');
 		cardRefNum = $('.asking').attr('data-number');
-		console.log(cardRefUI + '&' + cardRefNum);
+		console.log('asking about: ' + cardRefUI + ' & ' + cardRefNum);
 
 
 		// find card in user hand array that corresponds with card selected 
 		var matchIndex = $('#compHandUI > div').index($('div[data-number|=' + cardRefNum + ']'));
-		console.log(matchIndex);
+		console.log('index of matching card in comp hand: ' + matchIndex);
 
 		if (matchIndex > -1) {
 			console.log('match!');
 			var matchId = $('#compHandUI :nth-child(' + (matchIndex + 1) + ')').attr('id');
 			var matchDiv = $('#' + matchId);
 			stuffDivLength = $('#stuff div').length;
-			console.log(matchDiv);
+			console.log('match div: ' + matchDiv);
 			
 			//SEND TO MATCHBOX
 			$('#stuff').append( $('#' + matchId) );
@@ -297,7 +301,7 @@ $('#fileMatchesButton').click(function() {
 			//ADD MATCH CLASS
 			//$('#' + matchId).addClass('matched');
 			//$('#' + cardRefUI).addClass('matched').removeClass('asking');
-			$('#' + cardRefUI).removeClass('asking');
+			//$('#' + cardRefUI).removeClass('asking');
 
 			var matchWait = setTimeout(function() {
 				$('#messageBox').text('You got a match! Go again!');
@@ -306,192 +310,125 @@ $('#fileMatchesButton').click(function() {
 
 		else {
 			$('#messageBox').text('Sorry, no ' + cardRefNum + 's. Go fish!');
-			$('.asking').removeClass('asking');
+			//$('.asking').removeClass('asking');
 			// var fishWait = setTimeout(function() {
 			// 	$('#messageBox').text('')
 			// }, 500);
 			$('#goFishButton').show();
 			
 			console.log('no match!');
-		}
+		}		
 
-
-
-		
-
-		//$(".asking").removeClass('asking');
+		$(".asking").removeClass('asking');
 		$("#userScore").text($('#stuff div').length/2);
 	});
 
 
-	// USER CLICKS 'GO FISH BUTTON'
+// USER CLICKS 'GO FISH BUTTON'
+
 		$("#goFishButton").click(function() {
 			$('#goFishButton').hide()
 			$('#messageBox').text('Computer turn');
-			userTurn();		
+			dealUser();		
 			
+			// DELAY AFTER DRAW, THEN START COMPUTER TURN
 			compTurnWait = setTimeout(function() {
 				computerTurn();
 			}, 1000);
 		});
 
-	// USER CLICKS 'END TURN BUTTON'
-		// $("#endTurnButton").click(function() {
-		// 	console.log('clicked end turn button');
-		// 	computerTurn();
-		// });
+// USER CLICKS BUTTON TO MAKE COMPUTER GO FISH
 
+		$('#compFishButton').click(function() {
+		 	$('#compHandUI .faceUp').removeClass('compSelected faceUp matched').addClass('faceDown');
+		 	$('#messageBox').text('Your turn! Select card and hit ask');
+		 	console.log('select random card firing from compFishButton');
+		 	console.log('computer selected: ' + randomCard.cardNumber + ' of ' + randomCard.cardSuit);
+		 	dealComp();
+		 	$('#compFishButton').hide();
+		 	return 'break here?'; // just added
+		 });
 
 
 // COMPUTER TURN
 
-
 	 function computerTurn() {
-	 	
+	 	console.log('computer turn firing');
 	 	clearTimeout(compTurnWait);
 
-	 	// COMP CHOOSES CARD TO ASK
-	 	var compCardsInHand = $('#compHandUI div').length;
-	 		console.log(compCardsInHand);
-	 	var compCardIndex = Math.floor((Math.random() * compCardsInHand) + 1);
+	 // COMP CHOOSES CARD TO ASK
+	 	compCardsInHand = $('#compHandUI div').length;
+	 		console.log('# of cards in comp hand: ' + compCardsInHand);
+	 	compCardIndex = Math.floor((Math.random() * compCardsInHand) + 1);
 	 		console.log('comp card index: ' + compCardIndex);
-	 	var compCardId = $('#compHandUI :nth-child(' + (compCardIndex) + ')').attr('id');
+	 	compCardId = $('#compHandUI :nth-child(' + (compCardIndex) + ')').attr('id');
 	 		console.log('compcardid: ' + compCardId);
-	 	//var compCardNum = $('#' + compCardId).attr('data-number');
 	 		
 
-
-
-
-
-	 	// COMPUTER ASKS FOR CARD (card revealed in hand)
+	 // COMPUTER ASKS FOR CARD (& card displayed in hand)
 	 	$('#' + compCardId).addClass('faceUp compSelected').removeClass('faceDown');
 	 	$('#messageBox').text('Do you have any ' + $('#' + compCardId).attr('data-number') + "s?");
 
-	 		 	var compCardNum = $('.compSelected').attr('data-number');	
-	 			console.log('compcardnum: ' + compCardNum);
+	 	var compCardNum = $('.compSelected').attr('data-number');	
+	 	console.log('compcardnum: ' + compCardNum);
 
 
-	 	// IN YOUR HAND?
+	 // CHECK IF CARD IS IN YOUR HAND
+	 	yourMatchIndex = $("#userHandUI ." + compCardNum).index()	
+	 	console.log('your match index: ' + yourMatchIndex);
 	 	
-
-		var yourMatchIndex = $("#userHandUI ." + compCardNum).index()	
-	 		
-	 		console.log('your match index: ' + yourMatchIndex);
-	 	if (yourMatchIndex == -1) {
-	 		$('#messageBox2').text('Nope! Tell computer to go fish.');
-	 		$('#compFishButton').show();
-
-
-	 		// TELL COMP TO FUCK OFF 
-
-		 	$('#compFishButton').click(function() {
-		 		$('#compHandUI .faceUp').removeClass('compSelected faceUp matched').addClass('faceDown');
-		 		$('#messageBox').text('Your turn! Select card and hit ask');
-		 		console.log('select random card firing from compFishButton');
-		 		console.log('computer selected: ' + randomCard.cardNumber + ' of ' + randomCard.cardSuit);
-		 		dealComp();
-		 		$('#compFishButton').hide();
-		 		return 'break here?'; // just added
-		 	});
-
+	 	if (yourMatchIndex == -1) {	
+	 		//$('#messageBox2').text('Nope! Tell computer to go fish.'); <-- coming back to these (p3)
+	 		$('#compFishButton').show(); // displays 'go fish, computer' button	 	
 	 	}	
+
 	 	else {
 	 		$('#giveCardsButton').show();
-
-	 // HAND OVER CARD
-
-		 	$('#giveCardsButton').click(function() {
-		 		$('#' + compCardId).removeClass('compSelected');
-		 		$('#messageBox').empty();
-
-		 		var compMatchId = $('#userHandUI :nth-child(' + (yourMatchIndex + 1) + ')').attr('id');
-				var compMatchDiv = $('#' + compMatchId);
-				
-				// SEND TO MATCH BOX
-				$('#compMatches').append( $('#' + compMatchId) );
-				$('#compMatches').append( $('#' + compCardId) );
-				$('#compMatches').append('<br>'); // TODO separator
-
-				// UPDATE COMPUTER SCORE
-				var compMatchesDivLength = $('#compMatches div').length;
-				$("#computerScore").text(compMatchesDivLength / 2);
-
-				// ADD MATCH CLASS // TODO - style these for match box
-							//$('#' + compMatchId).addClass('matched');
-							//$('#' + compCardId).addClass('matched').removeClass('asking');
-
-				$('#giveCardsButton').hide();
-				
-				// RESET FOR NEXT TURN
-				compCardsInHand = null;
-				compCardIndex = null;
-				compCardId = null;
-				compMatchId = null;
-				compMatchDiv = null;
-
-				$('#compCardId').addClass('faceDown');
-				$('#compHandUI .card').removeClass('compSelected faceUp matched');
-		 		$('#messageBox2').empty(); //TODO - message - your turn?
-		 		$('#messageBox').text('Your turn! Select card and hit ask');
-
-		 		//COMP GOES AGAIN
-
-				computerTurn();
-
-		 	});
-
 	 	}
 
-	 	// // HAND OVER CARD
-	 	// $('#giveCardsButton').click(function() {
-	 	// 	$('#' + compCardId).removeClass('compSelected');
-	 	// 	$('#messageBox2').empty();
-	 	// 	$('#messageBox').empty();
-
-	 	// 	var compMatchId = $('#userHandUI :nth-child(' + (yourMatchIndex + 1) + ')').attr('id');
-			// var compMatchDiv = $('#' + compMatchId);
-			
-			// // SEND TO MATCH BOX
-			// $('#compMatches').append( $('#' + compMatchId) );
-			// $('#compMatches').append( $('#' + compCardId) );
-			// $('#compMatches').append('<br>'); // TODO separator
-
-			// // UPDATE COMPUTER SCORE
-			// var compMatchesDivLength = $('#compMatches div').length;
-			// $("#computerScore").text(compMatchesDivLength / 2);
-
-			// // ADD MATCH CLASS // TODO - style these for match box
-			// $('#' + compMatchId).addClass('matched');
-			// $('#' + compCardId).addClass('matched').removeClass('asking');
-
-			// $('#giveCardsButton').hide();
-			
-			// // RESET FOR NEXT TURN
-			// compCardsInHand = null;
-			// compCardIndex = null;
-			// compCardId = null;
-			// compMatchId = null;
-			// compMatchDiv = null;
-
-			// $('#compCardId').addClass('faceDown');
-			// $('#compHandUI .card').removeClass('compSelected faceUp matched');
-	 	// 	$('#messageBox2').empty(); //TODO - message - your turn?
-	 	// 	$('#messageBox').text('Your turn! Select card and hit ask');
-
-
-			// computerTurn();
-
-	 	// });
-
-
-
-
-
-
-
-
 	 }
+
+// USER CLICKS BUTTON TO FORFEIT MATCHING CARD
+
+ 	$('#giveCardsButton').click(function() {
+ 		$('#' + compCardId).removeClass('compSelected');
+ 		$('#messageBox').empty();
+
+ 		var compMatchId = $('#userHandUI :nth-child(' + (yourMatchIndex + 1) + ')').attr('id');
+		var compMatchDiv = $('#' + compMatchId);
+		
+		// SEND TO MATCH BOX
+		$('#compMatches').append( $('#' + compMatchId) );
+		$('#compMatches').append( $('#' + compCardId) );
+		$('#compMatches').append('<br>'); // TODO separator
+
+		// UPDATE COMPUTER SCORE
+		var compMatchesDivLength = $('#compMatches div').length;
+		$("#computerScore").text(compMatchesDivLength / 2);
+
+		// ADD MATCH CLASS // TODO - style these for match box
+					//$('#' + compMatchId).addClass('matched');
+					//$('#' + compCardId).addClass('matched').removeClass('asking');
+
+		$('#giveCardsButton').hide();
+		
+		// RESET FOR NEXT TURN
+		compCardsInHand = null;
+		compCardIndex = null;
+		compCardId = null;
+		compMatchId = null;
+		compMatchDiv = null;
+
+		//$('#' + compCardId').addClass('faceDown');
+		$('#' + compHandUI + '.card').removeClass('compSelected matched');
+ 		$('#messageBox2').empty(); //TODO - message - your turn?
+ 		$('#messageBox').text('Your turn! Select card and hit ask');
+
+ 		//COMP GOES AGAIN BECAUSE VICTORY
+
+		computerTurn();
+
+ 	});
 
 
 //});
