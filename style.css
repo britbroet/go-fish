@@ -31,6 +31,7 @@
 	min-height: 30px;
 	font-size: 24px;
 	font-weight: bold;
+	text-transform: lowercase;
 }
 
 .cardContainer {
@@ -41,7 +42,7 @@
 }
 
 .deckContainer {
-	background-color: green;	
+	background-color: #eeeeee;	
 }
 
 .compCardContainer {
@@ -71,7 +72,6 @@
 }
 
 .compSelected {
-	transform:scale(2,2);
 	z-index: 99;
 }
 
@@ -160,17 +160,38 @@
 	display: none;
 }
 
-/*#goFishButton  {
+#goFishButton  {
 	display: none;
+}
+
+#askButton {
+	display: none;
+}
+
+.activeButton {
+    background: #cecece !important;
+    text-decoration: none;
+    color: #ccc !important;
 }
 
 #giveCardsButton {
 	display: none;
 }
 
+#endTurnButton {
+	display: none;
+}
+
 #compFishButton {
 	display: none;
 }
+
+/*
+#giveCardsButton {
+	display: none;
+}
+
+
 
 #askButton {
 	display: none;
