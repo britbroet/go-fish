@@ -26,6 +26,12 @@
 	display:inline-block;
 }
 
+#turnNum {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+}
+
 #messageBox {
 	width: 100%;
 	min-height: 30px;
