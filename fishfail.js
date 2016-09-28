@@ -125,3 +125,48 @@
 	// 		}
 	// 	}
 	// });
+
+
+	// ------------------------- BEFORE COMP/USER FUNCTION SWITCH: INITIAL MATCHING:
+
+	
+
+	/// check for match
+
+// function checkForMatch() {
+// 	for (i = 1; i < $('#userHandUI div').length + 1; i++) {
+// 		currentCard = $('#userHandUI :nth-child(' + i + ')'); 
+// 		currentCardId = currentCard.attr('id');
+// 		currentCardNum = currentCard.attr('data-number');
+// 		console.log('data num: ' + currentCard.attr('data-number'));
+// 		console.log('this is the current card: ' + currentCard);
+
+// 		for (j = 1; j < $('#userHandUI div').length + 1; j++) {
+// 			if (j == i) {
+// 				console.log('hit current card in check loop <br> i=' + i + ' j=' + j);
+// 			}
+// 			else {
+// 				console.log('hit different card in check loop <br> i=' + i + ' j=' + j);
+// 				compareCard = $('#userHandUI :nth-child(' + j + ')');
+// 				compareCardId = compareCard.attr('id');
+// 				compareCardNum = compareCard.attr('data-number');
+// 				console.log('compare card: ' + compareCardNum);
+				
+// 				if (currentCardNum == compareCardNum) {
+// 					$('#' + currentCardId).addClass('preMatch');
+// 					$('#' + compareCardId).addClass('preMatch');
+// 				}	
+// 			}
+// 		}
+// 	}
+// 	var matchesInHand = $("#userHandUI .preMatch").index();
+// 		console.log('matches in hand: ' + matchesInHand);
+	
+// 	if (matchesInHand == -1) {
+// 		$('#messageBox').text('No initial matches found - select a card to ask for!')
+// 	}
+// 	else {
+// 		$('#messageBox').text('Jawesome! You already have matches! File them away!');
+// 		$('#fileMatchesButton').show();
+// 	}
+// }

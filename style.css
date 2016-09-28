@@ -152,6 +152,18 @@
 	margin-top: 30px;
 }
 
+.preMatch {
+	margin-top: -100px;
+}
+
+#fileMatchesButton {
+	display: none;
+}
+
+/*#goFishButton  {
+	display: none;
+}
+
 #giveCardsButton {
 	display: none;
 }
@@ -159,3 +171,11 @@
 #compFishButton {
 	display: none;
 }
+
+#askButton {
+	display: none;
+}
+
+#endTurnButton {
+	display: none;
+}*/

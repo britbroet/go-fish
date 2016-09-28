@@ -10,6 +10,7 @@ var inPlay = [];
 
 var userMatches = [];
 var computerMatches = [];
+var stuffDivLength;
 
 var randomCard;
 var randomIndex; 
@@ -18,6 +19,17 @@ var turn;
 var cardRefUI; //ID of card in play
 var cardRefNum;
 var turn = 0;
+
+
+var currentCard; 
+var currentCardId;
+var currentCardNum;
+var compareCard;
+var compareCardId; 
+var compareCardNum;
+//var matchesInHand;
+
+
 
 // BUILD DECK AUTOMATICALLY
 
@@ -43,10 +55,8 @@ for (j = 0; j < numberOption.length; j++) {
 
 	function selectRandomCard() {
 		randomIndex = Math.floor((Math.random() * deck.length - 1) + 1);
-		//console.log('randomIndex: ' + randomIndex);
 		randomCard = deck[randomIndex];
 		deck.splice(randomIndex, 1);
-		//console.log(newCard);
 	}
 
 
@@ -70,15 +80,63 @@ for (j = 0; j < numberOption.length; j++) {
 			dealComp();
 			i++;
 		}
-
-		// // INITIAL MATCHING
-		
-		// $(document).on('click', '.preGame', function (){
-		// 	$(this).addClass('preMatchCard');	
-		// });
-
-
 	});
+
+
+
+
+function checkForMatch(hand) {
+	var checkHandDiv = "#" + hand + " div";
+	var checkHand = '#' + hand;
+	var checkHandVar = hand;
+	console.log(checkHandDiv);
+	for (i = 1; i < $(checkHandDiv).length + 1; i++) {
+		currentCard = $('#' + checkHandVar + ' :nth-child(' + i + ')'); 
+		currentCardId = currentCard.attr('id');
+		currentCardNum = currentCard.attr('data-number');
+		console.log('data num: ' + currentCard.attr('data-number'));
+		console.log('this is the current card: ' + currentCard);
+
+		for (j = 1; j < $('#' + checkHandVar + ' div').length + 1; j++) {
+			if (j == i) {
+				console.log('hit current card in check loop <br> i=' + i + ' j=' + j);
+			}
+			else {
+				console.log('hit different card in check loop <br> i=' + i + ' j=' + j);
+				compareCard = $('#' + checkHandVar + ' :nth-child(' + j + ')');
+				compareCardId = compareCard.attr('id');
+				compareCardNum = compareCard.attr('data-number');
+				console.log('compare card: ' + compareCardNum);
+				
+				if (currentCardNum == compareCardNum) {
+					$('#' + currentCardId).addClass('preMatch');
+					$('#' + compareCardId).addClass('preMatch');
+				}	
+			}
+		}
+	}
+	var matchesInHand = $('#' + checkHandVar + ' .preMatch').index();
+		console.log('matches in hand: ' + matchesInHand);
+	
+	if (matchesInHand == -1) {
+		$('#messageBox').text('No initial matches found - select a card to ask for!')
+	}
+	else {
+		$('#messageBox').text('Jawesome! You already have matches! File them away!');
+		$('#fileMatchesButton').show();
+	}
+}
+
+$('#fileMatchesButton').click(function() {
+	$('#stuff').append($('#userHandUI .preMatch'));
+	$('#stuff .preMatch').removeClass('preMatch');
+	stuffDivLength = $('#stuff div').length;
+	console.log(stuffDivLength);
+	$('#userScore').text(stuffDivLength/2);
+	$('#messageBox').text('Start game by selecting a card to ask computer for.');
+});
+
+
 
 
 	// NEW CARD ADDED TO USER HAND
@@ -168,7 +226,7 @@ for (j = 0; j < numberOption.length; j++) {
 			console.log('match!');
 			var matchId = $('#compHandUI :nth-child(' + (matchIndex + 1) + ')').attr('id');
 			var matchDiv = $('#' + matchId);
-			var stuffDivLength = $('#stuff div').length;
+			stuffDivLength = $('#stuff div').length;
 			// $("#userScore").append('Your Total Matches: ' + stuffDivLength/2);
 			console.log(matchDiv);
 			
