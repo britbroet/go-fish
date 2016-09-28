@@ -12,46 +12,48 @@
 
 
 <div class="gameContainer">
-<div id="userScore"></div>
-<div id="computerScore"></div>
-<div id="messageBox"></div>
+
+<div id="userScoreContainer">
+	User Matches: <div id="userScore">0</div>
+</div>
+
+<div id="compScoreContainer">
+	Computer Matches: <div id="computerScore">0</div>
+</div>
+
+
 
 	<div class="game">
 
-		<div id = "compHand" class="compCardContainer cardContainer">
+		<div id="compHandUI" class="compCardContainer cardContainer">
 		</div>
 
 		<div class="deckContainer cardContainer">
 			<div class="cardDeck card faceDown" id="drawCard"></div>
-			<div class="cardDrawn card" id="userDrawnCard"></div>
-			<div class="cardDrawn card" id="computerDrawnCard"></div>
-			<input type="button" id="dealButton" class="btn" value="Deal Cards">
-			<input type="button" id="goFishButton" class="btn" value="GO FISH">
-			<input type="button" id="askButton" class="btn" value="Ask for">
-			<input type="button" id="endTurnButton" class="btn" value="Done with turn">
+			<div class="cardDrawn card" id="drawnCardUI"></div>
+		
+
+			<div id="actionContainer" class="actionContainer">
+				<div id="messageBox" class="messageBox"></div>
+				<input type="button" id="dealButton" class="btn" value="Deal Cards">
+				<input type="button" id="goFishButton" class="btn" value="GO FISH">
+				<input type="button" id="askButton" class="btn" value="Ask for">
+				<input type="button" id="endTurnButton" class="btn" value="Done with turn">
+				<input type="button" id="compFishButton" class="btn" value="Nope! Go Fish!">
+				<input type="button" id="giveCardsButton" class="btn" value="Hand 'em over...">
+				<div id="messageBox2" class="messageBox"></div>
+			</div>
+
 		</div>
 
-		<div id="userHand" class="userCardContainer cardContainer">
+		<div id="userHandUI" class="userCardContainer cardContainer">
 		</div>
 
 	</div>
 
-	<div class="checkContainer">
-		<div id="checkUser" class="checkDiv">
-			<h2>User Hand</h2>
-		</div>
-		<div id="checkComp" class="checkDiv">
-			<h2>Computer Hand</h2>
-		</div>
-		<div id="checkSelected" class="checkDiv">
-			<h2>Selected</h2>
-		</div>
-		<div id="checkDeck" class="checkDiv">
-			<h2>Remaining in Deck</h2>
-		</div>
-	</div>
 
-
+	<div id="stuff"></div>
+	<div id="compMatches"></div>
 
 </div>
 
@@ -63,8 +65,8 @@
 
 
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="arraybegone.js"></script>
 </body>
 </html>

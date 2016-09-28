@@ -12,6 +12,12 @@
 	display:inline-block;
 }
 
+#stuff {
+	width: 800px;
+	height: 400px;
+	background-color: teal;
+}
+
 #computerScore {
 	width: 49%;
 	min-height: 30px;
@@ -64,9 +70,19 @@
 	float: left;
 }
 
+.compSelected {
+	transform:scale(2,2);
+	z-index: 99;
+}
+
 .selectedCard {
 	margin-top: -70px;
 	border; 4px solid black;
+}
+
+.preMatchCard {
+	margin-top: -70px;
+	border; 4px solid blue;
 }
 
 .deck {
@@ -99,8 +115,6 @@
 
 .tempCompCardStyle {
 	background-color: white;
-	font-size: 18px;
-	font-weight: bold;
 }
 
 .faceUp {
@@ -131,4 +145,17 @@
 .asking {
 	border: 2px solid red;
 	margin-top: -100px;
+}
+
+.match {
+	border: 2px solid red;
+	margin-top: 30px;
+}
+
+#giveCardsButton {
+	display: none;
+}
+
+#compFishButton {
+	display: none;
 }
