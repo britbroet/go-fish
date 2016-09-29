@@ -202,7 +202,7 @@ function checkForMatch(hand) {
 	function addCardToUserHandUI(card) {
 		console.log('addCardToUserHandUI firing');
 		newCardID = card.cardSuit + card.cardNumber;	
-		$("#userHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '">' + card.cardNumber + '<br>' + card.cardSuit + '</div>');
+		$("#userHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"></div>');
 		$('#' + newCardID).addClass('card faceUp cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
 		
 		// IN CASE YOU GO FISH A MATCH 
@@ -236,7 +236,7 @@ function checkForMatch(hand) {
 	function addCardToCompHandUI(card) {
 		console.log('addCardToCompHandUI firing');
 		newCardID = card.cardSuit + card.cardNumber;
-		$("#compHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"><p class="tempCompCardStyle">'  + card.cardNumber + '<br>' + card.cardSuit +  '</p></div>');
+		$("#compHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"></div>');
 		$('#' + newCardID).addClass('card faceDown cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
 	}
 

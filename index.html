@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>GO FISH!</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
   	<!-- <link rel="stylesheet" href="jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 </head>
 <body>
@@ -21,29 +22,32 @@
 	Computer Matches: <div id="computerScore">0</div>
 </div>
 
-
 	<div class="game">
 
 		<div id="compHandUI" class="compCardContainer cardContainer">
 		</div>
 
-		<div class="deckContainer cardContainer">
-			<div class="cardDeck card faceDown" id="drawCard"></div>
-			<div class="cardDrawn card" id="drawnCardUI"></div>
-		
+		<div class=row>
+			<div class="deckContainer cardContainer">
+				<div class="col-xs-4">
+					<div class="cardDeck card faceDown" id="drawCard"></div>
+				</div>
 
-			<div id="actionContainer" class="actionContainer">
-				<div id="messageBox" class="messageBox"></div>
-				<input type="button" id="dealButton" class="btn" value="Deal Cards">
-				<input type="button" id="fileMatchesButton" class="btn" value="Count matches">
-				<input type="button" id="goFishButton" class="btn" value="GO FISH">
-				<input type="button" id="askButton" class="btn" value="Ask for">
-				<input type="button" id="endTurnButton" class="btn" value="Done with turn">
-				<input type="button" id="compFishButton" class="btn" value="Nope! Go Fish!">
-				<input type="button" id="giveCardsButton" class="btn" value="Hand 'em over...">
-				<div id="messageBox2" class="messageBox"></div>
+				<div class="col-xs-8">
+					<div id="actionContainer" class="actionContainer">
+						<div id="messageBox" class="messageBox"></div>
+						<input type="button" id="dealButton" class="btn btn-primary" value="Deal Cards">
+						<input type="button" id="fileMatchesButton" class="btn btn btn-success" value="Count matches">
+						<input type="button" id="goFishButton" class="btn btn btn-info" value="GO FISH">
+						<input type="button" id="askButton" class="btn btn btn-success" value="Ask for">
+						<input type="button" id="endTurnButton" class="btn" value="Done with turn">
+						<input type="button" id="compFishButton" class="btn btn-info" value="Nope! Go Fish!">
+						<input type="button" id="giveCardsButton" class="btn btn-warning" value="Hand 'em over...">
+						<div id="messageBox2" class="messageBox"></div>
+					</div>
+				</div>
+
 			</div>
-
 		</div>
 
 		<div id="userHandUI" class="userCardContainer cardContainer">
@@ -51,9 +55,14 @@
 
 	</div>
 
-
-	<div id="stuff"></div>
-	<div id="compMatches"></div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div id="stuff"></div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<div id="compMatches"></div>
+		</div>
+	</div>
 
 </div>
 
