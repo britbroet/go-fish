@@ -229,11 +229,17 @@ body {
 	display: none;
 }
 
+#dealButton {
+	font-size: 18px;
+}
+
 .activeButton {
     background: #cecece !important;
     text-decoration: none;
     color: #ccc !important;
 }
+
+
 
 #giveCardsButton {
 	display: none;
