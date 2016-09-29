@@ -81,6 +81,12 @@
 	z-index: 99;
 }
 
+
+.gotcha {
+	border: 2px solid red;
+	margin-top: -50px;
+}
+
 .selectedCard {
 	margin-top: -70px;
 	border; 4px solid black;

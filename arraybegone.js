@@ -204,7 +204,30 @@ function checkForMatch(hand) {
 		newCardID = card.cardSuit + card.cardNumber;	
 		$("#userHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '">' + card.cardNumber + '<br>' + card.cardSuit + '</div>');
 		$('#' + newCardID).addClass('card faceUp cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
-		console.log(randomCard.cardId);
+		
+		// IN CASE YOU GO FISH A MATCH 
+		//(was originally going to combine with checkformatch, but got messy - might try later)
+		if (deck.length < 38) {
+
+			for (i = 1; i < $('#userHandUI div').length + 1; i++) {
+				currentCard = $('#userHandUI :nth-child(' + i + ')'); 
+				currentCardId = currentCard.attr('id');
+				currentCardNum = currentCard.attr('data-number');
+
+				if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
+					$('#messageBox').text('WTF you drew a match anyway. Great job.');
+					$('#stuff').append($('#' + currentCardId));
+					$('#stuff').append($('#' + newCardID));
+					$('#userScore').text($('#stuff div').length/2);
+				}
+				else {
+					console.log('drew a regular card that doesnt match shit in your hand');
+				}
+			}
+		}
+		else {
+			console.log('at start of game - should not be condition');
+		}
 	}
 
 
@@ -216,7 +239,6 @@ function checkForMatch(hand) {
 		$("#compHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"><p class="tempCompCardStyle">'  + card.cardNumber + '<br>' + card.cardSuit +  '</p></div>');
 		$('#' + newCardID).addClass('card faceDown cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
 	}
-
 
 
 // USER TURN
@@ -280,15 +302,22 @@ function checkForMatch(hand) {
 			$('#stuff').append( $('#' + cardRefUI) );
 			$('#stuff').append('<br>'); // TODO separator
 
-			//ADD MATCH CLASS
-			//$('#' + matchId).addClass('matched');
-			//$('#' + cardRefUI).addClass('matched').removeClass('asking');
-			//$('#' + cardRefUI).removeClass('asking');
 
-			var matchWait = setTimeout(function() {
-				$('#messageBox').text('You got a match! Go again!');
-			}, 500);
+ 			if ($('#userHandUI div').length == 0) {
+		 		$('#messageBox').text("Ack! You found a match, but now you're out of cards! Here's another one... Go again!");
+		 	
+			 	var noCardsDrawDelay = setTimeout(function() {
+					dealUser();
+				}, 1000);	
+			 }
+			 else {
+				var matchWait = setTimeout(function() {
+					$('#messageBox').text('You got a match! Go again!');
+				}, 500);
+			}
 		}
+
+		
 
 		else {
 			$('#messageBox').text('Sorry, no ' + cardRefNum + 's. Go fish!');
@@ -310,7 +339,7 @@ function checkForMatch(hand) {
 			// DELAY AFTER DRAW, THEN START COMPUTER TURN
 			compTurnWait = setTimeout(function() {
 				computerTurn();
-			}, 1000);
+			}, 2000);
 		});
 
 
@@ -363,6 +392,7 @@ function checkForMatch(hand) {
 
 	 	else {
 	 		$('#giveCardsButton').show();
+	 		$('.' + compCardNum).addClass('gotcha');
 	 	}
 	 }
 
@@ -370,6 +400,7 @@ function checkForMatch(hand) {
 
  	$('#giveCardsButton').click(function() {
  		$('#' + compCardId).removeClass('compSelected');
+ 		$('.card').removeClass('gotcha');
  		$('#messageBox').empty();
 
  		var compMatchId = $('#userHandUI :nth-child(' + (yourMatchIndex + 1) + ')').attr('id');
