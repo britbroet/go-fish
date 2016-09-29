@@ -4,8 +4,10 @@
 	<title>GO FISH!</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   	<!-- <link rel="stylesheet" href="jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 </head>
 <body>
@@ -14,20 +16,42 @@
 
 <div class="gameContainer">
 
-<div id="userScoreContainer">
-	User Matches: <div id="userScore">0</div>
+<!-- SCORE BAR -->
+
+<div class="row" id="scoreContainer">
+	<div id="userScoreContainer" class="col-xs-4">
+		Your Matches: <div id="userScore">0</div>
+	</div>
+
+	<div id="toggleControl" class="col-xs-4 toggleClosed">
+		<i class="fa fa-plus" id="expandIcon"><span class="toggleText"> [show matches]</span></i>
+		<i class="fa fa-minus" id="retractIcon"><span class="toggleText"> [hide matches]</span></i>
+	</div>
+
+	<div id="compScoreContainer" class="col-xs-4">
+		Computer Matches: <div id="computerScore"> 0</div>
+	</div>
+
 </div>
 
-<div id="compScoreContainer">
-	Computer Matches: <div id="computerScore">0</div>
+<!-- EXPAND MATCHES -->
+
+<div class="row" id="matchContainer">
+	<div class="col-xs-12 col-sm-6">
+		<div id="stuff"></div>
+	</div>
+	<div class="col-xs-12 col-sm-6">
+		<div id="compMatches"></div>
+	</div>
 </div>
+
 
 	<div class="game">
 
 		<div id="compHandUI" class="compCardContainer cardContainer">
 		</div>
 
-		<div class=row>
+		<div class="row">
 			<div class="deckContainer cardContainer">
 				<div class="col-xs-4">
 					<div class="cardDeck card faceDown" id="drawCard"></div>
@@ -37,7 +61,7 @@
 					<div id="actionContainer" class="actionContainer">
 						<div id="messageBox" class="messageBox"></div>
 						<input type="button" id="dealButton" class="btn btn-primary" value="Deal Cards">
-						<input type="button" id="fileMatchesButton" class="btn btn btn-success" value="Count matches">
+						<input type="button" id="fileMatchesButton" class="btn btn btn-success" value="Put them in your match pile!">
 						<input type="button" id="goFishButton" class="btn btn btn-info" value="GO FISH">
 						<input type="button" id="askButton" class="btn btn btn-success" value="Ask for">
 						<input type="button" id="endTurnButton" class="btn" value="Done with turn">
@@ -55,27 +79,14 @@
 
 	</div>
 
-	<div class="row">
-		<div class="col-xs-12 col-sm-6">
-			<div id="stuff"></div>
-		</div>
-		<div class="col-xs-12 col-sm-6">
-			<div id="compMatches"></div>
-		</div>
-	</div>
-
 </div>
 
 
 
 
 
-
-
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 <script type="text/javascript" src="arraybegone.js"></script>
 </body>
 </html>

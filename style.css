@@ -1,6 +1,7 @@
-/*body {
+body {
 	font-family: 'Source Sans Pro', sans-serif !important; 
-}*/
+	font-size: 24px !important;
+}
 
 
 .gameContainer {
@@ -8,26 +9,66 @@
 	margin: 0 auto;
 }
 
-#userScore {
-	width: 49%;
-	min-height: 30px;
-	font-size: 24px;
-	font-weight: bold;
-	display:inline-block;
+#scoreContainer {
+	border-bottom: 1px solid #aaa;
 }
 
-#stuff, #compMatches {
+#userScore {
+	min-height: 30px;
+	font-size: 24px;
+	display:inline-block;
+	justify-content: center;
+}
+
+#compScoreContainer {
+	display:flex;
+	justify-content: flex-end;
+}
+
+#toggleControl {
+	font-size: 14px;
 	display: flex;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	height: 34px;
+	padding-right: 100px;
+}
+
+.toggleText {
+	font-family: 'Source Sans Pro', sans-serif !important;
+	color: #999;
+}
+
+#retractIcon {
+	display: none;
+}
+
+#stuff {
+
+}
+
+#compMatches {
+	display: flex;
+	justify-content: flex-end;
 }
 
 #computerScore {
-	width: 49%;
 	min-height: 30px;
 	font-size: 24px;
-	font-weight: bold;
 	display:inline-block;
+	padding-left: 10px;
 }
+
+#matchContainer {
+	min-height: 200px;
+	display: none;
+	padding-left: 50px;
+	padding-top: 20px;
+	background-color: #efefef;
+}
+
+
 
 #turnNum {
 	display: inline-block;
@@ -43,10 +84,8 @@
 }
 
 .cardContainer {
-	height: 200px;
-	background-color: gray;	
-	margin-bottom: 20px;
-	padding-left: 60px;
+    height: 142px;
+    margin: 40px 0;
 }
 
 .deckContainer {
@@ -54,13 +93,11 @@
 }
 
 .compCardContainer {
-	background-color: gray;
     display: flex;
     justify-content: center;
 }
 
 .userCardContainer {
-	background-color: yellow;
 	display: flex;
     justify-content: center;
 }
@@ -85,6 +122,8 @@
 
 .compSelected {
 	z-index: 99;
+	margin-top: 50px;
+	position: absolute;
 }
 
 
@@ -105,6 +144,10 @@
 
 .deck {
 	margin-right: 20px;
+}
+
+.cardDeck {
+	transform: scale(1.2,1.2);
 }
 
 .testDiv {
@@ -167,11 +210,11 @@
 
 .match {
 	border: 2px solid red;
-	margin-top: 30px;
+	margin-top: 70px;
 }
 
 .preMatch {
-	margin-top: -100px;
+	margin-top: -70px;
 }
 
 #fileMatchesButton {

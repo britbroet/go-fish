@@ -238,6 +238,30 @@ function checkForMatch(hand) {
 		newCardID = card.cardSuit + card.cardNumber;
 		$("#compHandUI").append('<div id="' + newCardID + '" data-suit="' + card.cardSuit + '" data-number="' + card.cardNumber + '"></div>');
 		$('#' + newCardID).addClass('card faceDown cardInHand ' + card.cardSuit + ' ' + card.cardNumber);
+
+		// IN CASE COMPUTER FISHES A MATCH 
+		//(was originally going to combine with checkformatch, but got messy - might try later)
+		if (deck.length < 38) {
+
+			for (i = 1; i < $('#compHandUI div').length + 1; i++) {
+				currentCard = $('#compHandUI :nth-child(' + i + ')'); 
+				currentCardId = currentCard.attr('id');
+				currentCardNum = currentCard.attr('data-number');
+
+				if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
+					$('#messageBox').text('Woahhh - computer drew a match');
+					$('#compMatches').append($('#' + currentCardId));
+					$('#compMatches').append($('#' + newCardID));
+					$('#computerScore').text($('#compMatches div').length/2);
+				}
+				else {
+					console.log('drew a regular card that doesnt match shit in your hand');
+				}
+			}
+		}
+		else {
+			console.log('at start of game - should not be condition');
+		}
 	}
 
 
@@ -392,7 +416,7 @@ function checkForMatch(hand) {
 
 	 	else {
 	 		$('#giveCardsButton').show();
-	 		$('.' + compCardNum).addClass('gotcha');
+	 		$('#userHandUI .' + compCardNum).addClass('gotcha');
 	 	}
 	 }
 
@@ -451,8 +475,27 @@ function checkForMatch(hand) {
 
  	});
 
+//ACCORDION FUNCTION
+	$( "#expand-icon" ).click(function() {
+	  $( "#expand-matches" ).slideToggle( "slow", function() {
+	    // Animation complete.
+	  });
+	});
 
 });
+
+// TOGGLE FUNCTION
+    $('#expandIcon').click(function(){
+        $('#matchContainer').toggle("blind", 1000);
+        $('#expandIcon').hide();
+        $('#retractIcon').show();
+    });
+
+    $('#retractIcon').click(function(){
+        $('#matchContainer').toggle("blind", 1000);
+        $('#retractIcon').hide();
+        $('#expandIcon').show();
+    });
 
 //NOTES
 //$('#userHandUI > div').index($( "div[data-number|='7']" ))
