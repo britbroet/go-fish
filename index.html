@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>GO FISH!</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="rollback.css">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,15 +53,18 @@
 
 		<div class="row">
 			<div class="deckContainer cardContainer">
-				<div class="col-xs-4">
+				<div class="col-xs-2">
 					<div class="cardDeck card faceDown" id="drawCard">
 						<div class="cardDeck card faceDown top-card" id="topCard"></div>
 					</div>
 				</div>
 
-				<div class="col-xs-8">
+				<div class="col-xs-10" id="messageButtons">
 					<div id="actionContainer" class="actionContainer">
 						<div id="messageBox" class="messageBox"></div>
+						<div id="messageBox2" class="messageBox"></div>
+					</div>
+					<div id="buttonContainer">
 						<input type="button" id="dealButton" class="btn btn-primary" value="Deal Cards">
 						<input type="button" id="fileMatchesButton" class="btn btn btn-success" value="Put them in your match pile!">
 						<input type="button" id="goFishButton" class="btn btn btn-info" value="GO FISH">
@@ -69,7 +72,6 @@
 						<input type="button" id="endTurnButton" class="btn" value="Done with turn">
 						<input type="button" id="compFishButton" class="btn btn-info" value="Nope! Go Fish!">
 						<input type="button" id="giveCardsButton" class="btn btn-warning" value="Hand 'em over...">
-						<div id="messageBox2" class="messageBox"></div>
 					</div>
 				</div>
 
