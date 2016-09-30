@@ -88,7 +88,7 @@ $(document).ready(function(){
 			i++;
 		}
 
-		$('#messageBox').text("Let's get started by seeing if there are any matches already!");
+		$('#messageBox').text("Let's get started by seeing if there are any matches already already in your hand...");
 				
 		userStartWait = setTimeout(function() {
 			checkForMatch('userHandUI');
@@ -172,7 +172,7 @@ function checkForMatch(hand) {
 		}	
 
 		var startGameWait = setTimeout(function(){
-			$('#messageBox').text('Start game by selecting a card to ask computer for.');
+			$('#messageBox').text('Start game by selecting a card, and then clicking the Ask button to see if the computer has a match.');
 		}, 3000);	
 	}
 }
@@ -215,7 +215,7 @@ function checkForMatch(hand) {
 				currentCardNum = currentCard.attr('data-number');
 
 				if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
-					$('#messageBox').text('WTF you drew a match anyway. Great job.');
+					$('#messageBox').text("Hey, you drew a match anyway! Great job. Computer's turn.");
 					$('#stuff').append($('#' + currentCardId));
 					$('#stuff').append($('#' + newCardID));
 					$('#userScore').text($('#stuff div').length/2);
@@ -249,7 +249,7 @@ function checkForMatch(hand) {
 				currentCardNum = currentCard.attr('data-number');
 
 				if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
-					$('#messageBox').text('Woahhh - computer drew a match');
+					$('#messageBox').text('Rats, the computer drew a match. Oh well, your turn!');
 					$('#compMatches').append($('#' + currentCardId));
 					$('#compMatches').append($('#' + newCardID));
 					$('#computerScore').text($('#compMatches div').length/2);
@@ -357,7 +357,7 @@ function checkForMatch(hand) {
 
 		$("#goFishButton").click(function() {
 			$('#goFishButton').hide()
-			$('#messageBox').text('Computer turn');
+			$('#messageBox').text('Computer turn.');
 			dealUser();		
 			
 			// DELAY AFTER DRAW, THEN START COMPUTER TURN
@@ -372,7 +372,7 @@ function checkForMatch(hand) {
 		$('#compFishButton').click(function() {
 		 	
 		 	$('#compHandUI .faceUp').removeClass('compSelected faceUp matched').addClass('faceDown');
-		 	$('#messageBox').text('Your turn! Select card and hit ask');
+		 	$('#messageBox').text('Your turn!');
 		 	console.log('select random card firing from compFishButton');
 		 	console.log('computer selected: ' + randomCard.cardNumber + ' of ' + randomCard.cardSuit);
 		 	dealComp();
@@ -455,13 +455,13 @@ function checkForMatch(hand) {
 		//$('#' + compCardId').addClass('faceDown');
 		//$('#' + compHandUI + '.card').removeClass('compSelected matched');
  		$('#messageBox2').empty(); //TODO - message - your turn?
- 		$('#messageBox').text('Your turn! Select card and hit ask');
+ 		$('#messageBox').text('Your turn!');
 
  		//COMP GOES AGAIN BECAUSE VICTORY
  		
  		// IF COMPUTER JUST MATCHED LAST CARDS AND IS OUT
  		if ($('#compHandUI div').length == 0) {
-		 	$('#messageBox').text("Ack! Computer's out of cards, need to draw one...");
+		 	$('#messageBox').text("Ack! Computer's out of cards, needs to draw one...");
 		 	
 		 	var noCardsDrawDelay = setTimeout(function() {
 				dealComp();
