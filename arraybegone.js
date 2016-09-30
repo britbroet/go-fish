@@ -69,12 +69,20 @@ $(document).ready(function(){
 		console.log('dealUser firing');
 		selectRandomCard();
 		addCardToUserHandUI(randomCard);
+		if (deck.length < 1) {
+			$('#drawCard').hide();
+			$('#topCard').hide();
+		}
 	}
 
 	function dealComp() {
 		console.log('dealComp firing');
 		selectRandomCard();
  		addCardToCompHandUI(randomCard);
+ 		if (deck.length < 1) {
+ 			$('#drawCard').hide();
+			$('#topCard').hide();	
+		}	
 	}
 
 // CLICK DEAL BUTTON TO INITIATE DEAL & INITIAL MATCHING
