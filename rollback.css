@@ -3,30 +3,6 @@ body {
 	font-size: 24px !important;
 }
 
-.test-transition {
-    -ms-transform: translate(10em,5em); /* IE 9 */
-    -webkit-transform: ttranslate(10em,5em); /* Safari */
-    transform: translate(20em,10em); /* Standard syntax */
-    transition-duration: 200ms;
-}
-
-/*.fade-out {
-
-}*/
-
-
-.user-draw-animation {
-    -webkit-animation-name: example; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 200ms; /* Chrome, Safari, Opera */
-    animation-name: example;
-    animation-duration: 200ms;
-}
-
-@keyframes example {
-   /* from {border: 4px solid red;}*/
-    to {margin-left: 150px; margin-top: 200px; display: none;}
-}
-
 
 .gameContainer {
 	width: 90%;
@@ -104,7 +80,7 @@ body {
 	width: 100%;
 	min-height: 30px;
 	font-size: 24px;
-	text-align:center;
+	text-align: center;
 }
 
 .cardContainer {
@@ -146,7 +122,8 @@ body {
 
 .compSelected {
 	z-index: 99;
-	margin-top: 70px;
+	margin-top: 50px;
+	position: absolute;
 }
 
 
@@ -158,7 +135,6 @@ body {
 .selectedCard {
 	margin-top: -70px;
 	border; 4px solid black;
-	z-index: 99;
 }
 
 .preMatchCard {
@@ -170,17 +146,8 @@ body {
 	margin-right: 20px;
 }
 
-/*.cardDeck {
+.cardDeck {
 	transform: scale(1.2,1.2);
-}*/
-
-.top-card {
-	position: absolute;
-}
-
-#topCard {
-	z-index: 10;
-	margin-top: 10px;
 }
 
 .testDiv {
@@ -262,17 +229,11 @@ body {
 	display: none;
 }
 
-#dealButton {
-	font-size: 18px;
-}
-
 .activeButton {
     background: #cecece !important;
     text-decoration: none;
     color: #ccc !important;
 }
-
-
 
 #giveCardsButton {
 	display: none;
@@ -290,13 +251,9 @@ body {
 #giveCardsButton {
 	display: none;
 }
-
-
-
 #askButton {
 	display: none;
 }
-
 #endTurnButton {
 	display: none;
 }*/
@@ -575,21 +532,6 @@ top: 65px;
     background-repeat: no-repeat;
     border: 4px solid #fff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

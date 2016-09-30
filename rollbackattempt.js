@@ -12,8 +12,6 @@ var newCardID;
 var cardRefUI; // ID of card in play?
 var cardRefNum;
 
-var turn;
-
 var userStartWait;
 var compStartWait;
 var compTurnWait;
@@ -32,18 +30,6 @@ var compCardIndex;
 var compCardId;
 
 //var matchesInHand;
-
-// CARD FROM DECK TO USER ANIMATION
-
-$('#topCard').click(function() {
-	$(this).addClass("user-draw-animation");
-	setTimeout(function() {
-		$('#topCard').removeClass("user-draw-animation");
-	}, 200);
-});
-
-
-
 
 
 
@@ -64,8 +50,6 @@ for (j = 0; j < numberOption.length; j++) {
 
 
 $(document).ready(function(){
-
-
 
 // DEALING AND DRAWING CARDS 
 
@@ -181,15 +165,15 @@ function checkForMatch(hand) {
 		$('#computerScore').text(compDivLength/2);
 		
 		if (compDivLength/2 == 1) {
-			$('#messageBox').text('Computer found ' + compDivLength/2 + ' match!');
+			$('#messageBox').text('Computer found ' + compDivLength/2 + ' match.');
 		}
 		else {
-			$('#messageBox').text('Computer found ' + compDivLength/2 + ' matches!');
+			$('#messageBox').text('Computer found ' + compDivLength/2 + ' matches.');
 		}	
 
 		var startGameWait = setTimeout(function(){
-			$('#messageBox').text('Start game by selecting a card to ask computer for.');
-		}, 2000);
+			$('#messageBox').text('Start the game by selecting a card in your hand to ask the computer for.');
+		}, 2000);	
 	}
 }
 
@@ -208,7 +192,6 @@ function checkForMatch(hand) {
 		compStartWait = setTimeout(function() {
 			checkForMatch('compHandUI');
 		}, 1000);
-		//turn = 'user';
 	});
 
 
@@ -226,13 +209,13 @@ function checkForMatch(hand) {
 		//(was originally going to combine with checkformatch, but got messy - might try later)
 		if (deck.length < 38) {
 
-			for (i = 1; i < $('#userHandUI div').length + 1; i++) {
+			for (i = 1; i < $('#userHandUI div').length - 1; i++) {
 				currentCard = $('#userHandUI :nth-child(' + i + ')'); 
 				currentCardId = currentCard.attr('id');
 				currentCardNum = currentCard.attr('data-number');
 
 				if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
-					$('#messageBox').text('WTF you drew a match anyway. Great job.');
+					$('#messageBox').text('Hey, you drew a match anyway! Great job!');
 					$('#stuff').append($('#' + currentCardId));
 					$('#stuff').append($('#' + newCardID));
 					$('#userScore').text($('#stuff div').length/2);
@@ -260,31 +243,28 @@ function checkForMatch(hand) {
 		//(was originally going to combine with checkformatch, but got messy - might try later)
 		if (deck.length < 38) {
 
-			for (i = 1; i < $('#compHandUI div').length + 1; i++) {
+			for (i = 1; i < $('#compHandUI div').length - 1; i++) {
 				currentCard = $('#compHandUI :nth-child(' + i + ')'); 
 				currentCardId = currentCard.attr('id');
 				currentCardNum = currentCard.attr('data-number');
 
-				if (card.cardNumber == currentCardNum && newCardID !== currentCardId && ($('#compHandUI div').length !== 0)) {
-					$('#messageBox').text('Woahhh - computer drew a match');
-					$('#compMatches').append($('#' + currentCardId));
-					$('#compMatches').append($('#' + newCardID));
-					$('#computerScore').text($('#compMatches div').length/2);
+				if (card.cardNumber == currentCardNum && newCardID != currentCardId) {
+					$('#messageBox').text('Woahhh - computer drew a match.');	
 
-					computerTurn();
-				}
-				else if (card.cardNumber == currentCardNum && newCardID !== currentCardId) {
-					$('#messageBox').text("Computer drew a match, but now it's out of cards, need to draw one...");
-		 			var noCardsDrawDelay = setTimeout(function() {
-						dealComp();
-						computerTurn();
-					}, 1000);
-				}
+					var compDelay2 = setTimeout(function() {
+						$('#messageBox').text('Your turn!');
+						$('#compMatches').append($('#' + currentCardId));
+						$('#compMatches').append($('#' + newCardID));
+						$('#computerScore').text($('#compMatches div').length/2);						
+					}, 2000);
 
+				}
 				else {
-					console.log('drew a regular card that doesnt match anything in your hand');
+					console.log('just a regular card that doesnt match anything in your hand');
 				}
 			}
+
+
 		}
 		else {
 			console.log('at start of game - should not be condition');
@@ -292,26 +272,12 @@ function checkForMatch(hand) {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // USER TURN
 
 	// USER SELECTS CARD FROM THEIR HAND TO ASK ABOUT
 
-		
-	$(document).on('click', '.faceUp', function (){
-		console.log('clicked card firing');
-		//if (turn == 'user') {
+		$(document).on('click', '.faceUp', function (){
+			console.log('clicked card firing');
 			$('#askButton').show();
 
 			cardRefUI = $(this).attr('id');
@@ -336,18 +302,8 @@ function checkForMatch(hand) {
 			else {
 				$(this).addClass('selectedCard');
 			}
-		//}
-
-		// if computer turn (keeps from picking cards during comp turn):
-		// else {
-		// 	$('#messageBox2').text("Knock it off - it's not your turn.");
-		// 	setTimeout(function() {
-		// 		$('#messageBox2').empty();
-		// 	}, 1000);
-		// }	
-		
-
-	});
+			
+		});
 
 
 // USER CLICKS ASK BUTTON
@@ -374,7 +330,8 @@ function checkForMatch(hand) {
 			
 			//SEND TO MATCHBOX
 			$('#stuff').append( $('#' + matchId) );
-			$('#stuff').append( $('#' + cardRefUI) ); // TODO separator
+			$('#stuff').append( $('#' + cardRefUI) );
+			$('#stuff').append('<br>'); // TODO separator
 
 
  			if ($('#userHandUI div').length == 0) {
@@ -407,15 +364,13 @@ function checkForMatch(hand) {
 
 		$("#goFishButton").click(function() {
 			$('#goFishButton').hide()
-			$('#messageBox').text('Computer turn');
+			$('#messageBox').text("computer's turn");
 			dealUser();		
 			
 			// DELAY AFTER DRAW, THEN START COMPUTER TURN
 			compTurnWait = setTimeout(function() {
 				computerTurn();
 			}, 2000);
-
-			//turn = 'computer';
 		});
 
 
@@ -429,8 +384,22 @@ function checkForMatch(hand) {
 		 	console.log('computer selected: ' + randomCard.cardNumber + ' of ' + randomCard.cardSuit);
 		 	dealComp();
 		 	$('#compFishButton').hide();
-		 	//turn = 'user';
 		 	return 'break here?'; // just added
+
+		 	// if ($('#compHandUI div').length == 0) {
+			 // 	$('#messageBox').text("Ack! Computer's out of cards, need to draw one...");
+			 	
+			 // 	var noCardsDrawDelay = setTimeout(function() {
+				// 	dealComp();
+				// 	computerTurn();
+				// }, 1000);	
+			 // }
+			 // else {
+			 // 	computerTurn();
+			 // }
+
+
+
 		 });
 
 
@@ -528,12 +497,12 @@ function checkForMatch(hand) {
 
  	});
 
-//ACCORDION FUNCTION
-	$( "#expand-icon" ).click(function() {
-	  $( "#expand-matches" ).slideToggle( "slow", function() {
-	    // Animation complete.
-	  });
-	});
+
+// WIN CONDITIONS
+// deck with no cards
+if (deck.length == 0) {
+	$('#drawCard').hide();
+};
 
 });
 
@@ -552,7 +521,3 @@ function checkForMatch(hand) {
 
 //NOTES
 //$('#userHandUI > div').index($( "div[data-number|='7']" ))
-
-
-	
-
