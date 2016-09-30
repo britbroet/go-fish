@@ -208,7 +208,7 @@ function checkForMatch(hand) {
 		compStartWait = setTimeout(function() {
 			checkForMatch('compHandUI');
 		}, 1000);
-		//turn = 'user';
+		turn = 'user';
 	});
 
 
@@ -311,7 +311,7 @@ function checkForMatch(hand) {
 		
 	$(document).on('click', '.faceUp', function (){
 		console.log('clicked card firing');
-		//if (turn == 'user') {
+		if (turn == 'user') {
 			$('#askButton').show();
 
 			cardRefUI = $(this).attr('id');
@@ -336,15 +336,15 @@ function checkForMatch(hand) {
 			else {
 				$(this).addClass('selectedCard');
 			}
-		//}
+		}
 
 		// if computer turn (keeps from picking cards during comp turn):
-		// else {
-		// 	$('#messageBox2').text("Knock it off - it's not your turn.");
-		// 	setTimeout(function() {
-		// 		$('#messageBox2').empty();
-		// 	}, 1000);
-		// }	
+		else {
+			$('#messageBox2').text("Knock it off - it's not your turn.");
+			setTimeout(function() {
+				$('#messageBox2').empty();
+			}, 1000);
+		}	
 		
 
 	});
@@ -415,7 +415,7 @@ function checkForMatch(hand) {
 				computerTurn();
 			}, 2000);
 
-			//turn = 'computer';
+			turn = 'computer';
 		});
 
 
@@ -429,7 +429,7 @@ function checkForMatch(hand) {
 		 	console.log('computer selected: ' + randomCard.cardNumber + ' of ' + randomCard.cardSuit);
 		 	dealComp();
 		 	$('#compFishButton').hide();
-		 	//turn = 'user';
+		 	turn = 'user';
 		 	return 'break here?'; // just added
 		 });
 
